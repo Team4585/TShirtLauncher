@@ -2,11 +2,12 @@
 package frc.team4585.robot.controller;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Relay;
 import frc.team4585.robot.models.Test;
 import frc.team4585.robot.models.Operator;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
+import frc.team4585.robot.models.Compressor;
+
 import frc.team4585.robot.view.HarveyDashboard;
 
 /**
@@ -15,42 +16,41 @@ import frc.team4585.robot.view.HarveyDashboard;
  * <br> Each method calls its Instantiated subclass method executeCode()       
 
  * 
- * @author Ivan Tachini
- * @version 0.3 
- * @since 11/11/2014
+ * @author Ivan Tachini (@Husky Robotics <Team 4585> )
+ * @version 0.4
+ * @since 12/06/2014
  */
 
 public class RobotController extends SimpleRobot
 {   
  
   //private final Class Instances |  Instance Name
-    
     private final Operator        OperatorCode;
     private final Test            TestCode;
     private final HarveyDashboard Dashboard;
     
     private static Joystick        Extreme3DPro;
     private static Joystick        Attack3;    
+    private static Compressor      Compressor;
+    
     private static RobotDrive      RobotChassis;
-    private static Relay           CompressorRelay;
-    
-    
     /**
      * Constructs Autonomous, Operator and Test
      */
     public RobotController()
     {   
        //InstanceName  = new InstanceOfClass(Arguments);
-        RobotChassis    = new RobotDrive(1,2,3,4);
-        CompressorRelay = new Relay(1);
-         
-        Dashboard       = new HarveyDashboard();
-        Extreme3DPro    = new Joystick(1);
-        Attack3         = new Joystick(2);
-       
-        OperatorCode    = new Operator();
-        TestCode        = new Test();       
+        RobotChassis   = new RobotDrive(1,2,3,4);
         
+        Dashboard      = new HarveyDashboard();
+        Extreme3DPro   = new Joystick(1);
+        Attack3        = new Joystick(2);
+        
+        Compressor     = new Compressor(-1,-1); //Todo
+        
+        OperatorCode   = new Operator();
+        TestCode       = new Test();
+       
     } 
      
      /**
@@ -62,7 +62,7 @@ public class RobotController extends SimpleRobot
       */ 
     public void autonomous()
     {
-        
+       
     }
      
      /**
@@ -76,7 +76,6 @@ public class RobotController extends SimpleRobot
     {
        while(isOperatorControl() && isEnabled())
        {
-        
          OperatorCode.executeCode();
          Dashboard.update();
        }
@@ -112,9 +111,11 @@ public class RobotController extends SimpleRobot
     {
         return Attack3;
     }
-    public static Relay getCompressorRelay()
+     
+    public static Compressor getCompressor()
     {
-        return CompressorRelay;
+        return Compressor;
     }
-        
+    
+    
 }

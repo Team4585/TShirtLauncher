@@ -16,7 +16,7 @@ public class Test
 {
     //Declaration Section
    private final RobotDrive RobotHarvey;
-   private Joystick Extreme3DPro;
+ 
     
     
     //Constructor Section
